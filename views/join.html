@@ -1,0 +1,79 @@
+<!-- ******************************************
+*  Author : NangKo   
+*  Created On : Sat Dec 16 2017
+*  File : /views/join.html
+******************************************* -->
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="NangKo">
+    <title></title>
+</head>
+
+<body>
+    <form action="/join2" method="get">
+        <table border="1">
+            <tr>
+                <th>이름</th>
+                <td><input type="text" name="username" id="username"></td>
+            </tr>
+            <tr>
+                <th>나이</th>
+                <td><input type="text" name="userage" id="userage"></td>
+            </tr>
+            <tr>
+                <th>아이디</th>
+                <td><input type="text" name="userid" id="userid"
+                        pattern="^[a-zA-Z0-9][a-zA-Z0-9_\.]{2,19}$"
+                        data-valid="아이디는 영문자, 숫자로 시작해야 하며 3~20자까지 입력하셔야 합니다."></td>
+            </tr>
+            <tr>
+                <th>비밀번호</th>
+                <td><input type="password" name="userpwd" id="userpwd"></td>
+            </tr>
+            <tr>
+                <th>주소</th>
+                <td><input type="text" name="useraddress" id="useraddress"></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button type="button" onclick="join()">회원가입</button></td>
+            </tr>
+        </table>
+    </form>
+
+    <script>
+        function User() {
+            this.username = '';
+            this.userage = '';
+            this.userid = '';
+            this.userpwd = '';
+            this.useraddress = '';
+        }
+        function join() {
+            var user = new User();
+            for (var key in user) {
+                
+
+                var ele = document.getElementById(key);
+                if (ele.getAttribute('data-valid')) {
+                    console.log(ele.getAttribute('pattern'));
+                    if (ele.getAttribute('pattern')) {
+                        var regExp = new RegExp(ele.getAttribute('pattern'), "g");
+                        if (!regExp.test(ele.value)) {
+                            alert(ele.getAttribute('data-valid'));
+                            return;
+                        }
+                    }
+                }
+                user[key] = ele.value;
+            }
+
+            alert(JSON.stringify(user));
+        }
+    </script>
+</body>
+
+</html>
